@@ -5,12 +5,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import lombok.Data;
 
 @Entity
 @Data
-public class User {
+public class UserEntity {
+	
+	@Transient
+	private BCryptPasswordEncoder Bcryptencoder = new BCryptPasswordEncoder();
 	
 	@Id
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
@@ -20,6 +27,12 @@ public class User {
 	@Column(length = 45, nullable = false , unique = false)
 	private String email;
 	
+	private String userId;
+	
 	private String hashedPassword;
+	
+	public void setPassword(String password) {
+		this.hashedPassword = Bcryptencoder.encode(password);
+	}
 
 }
