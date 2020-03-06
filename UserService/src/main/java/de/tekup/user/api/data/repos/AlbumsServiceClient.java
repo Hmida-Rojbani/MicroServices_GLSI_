@@ -14,7 +14,7 @@ import feign.FeignException;
 import feign.hystrix.FallbackFactory;
 
 
-@FeignClient(name = "albums-ws", fallbackFactory = AlbumsFallbackFactory.class)
+@FeignClient(name = "albums-ws", url = "localhost:8011/albums-ws",fallbackFactory = AlbumsFallbackFactory.class)
 public interface AlbumsServiceClient {
 
 	@GetMapping("/users/{id}/albums")
